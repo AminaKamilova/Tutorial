@@ -1,0 +1,52 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block title %}Все курсы{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/style_courses.css' %}" />
+{% endblock %}
+
+{% block content %}
+<section class="courses-section">
+    <div class="section-header">
+        <h2 class="section-title">Рекомендуем</h2>
+         <img class="arrow-icon" src="{% static 'main/img/move.svg' %}" alt="Стрелка">
+    </div>
+    <div class="header-actions">
+        {% if user.is_authenticated %}
+            <button class="add-course-btn" onclick="window.location.href='{% url 'add_course' course_id=0 %}'">
+                <i>+</i> Добавить курс
+            </button>
+        {% endif %}
+    </div>
+    <div class="courses-grid">
+        {% for course in courses %}
+        <article class="course-card">
+            <a href="{% url 'course_detail' course_id=course.id %}">
+                <div class="card-content">
+                    <div class="course-image-container">
+                        <img class="course-image" src="{% static 'main/img/course-1.png' %}" alt="{{ course.title }}" />
+                    </div>
+                    <div class="course-details">
+                        <span class="course-category">{{ course.category.name }}</span>
+                        <h3 class="course-title">{{ course.title }}</h3>
+                        <div class="course-meta">
+                            <img class="meta-icon" src="{% static 'main/img/calendar-icon.svg' %}" alt="Даты курса" />
+                            <span class="meta-text">{{ course.start_date|date:"d.m.Y" }} - {{ course.end_date|date:"d.m.Y" }}</span>
+                        </div>
+                        <p class="course-description">
+                            {{ course.description }}
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </article>
+        {% empty %}
+        <p>Курсы не найдены.</p>
+        {% endfor %}
+    </div>
+
+
+</section>
+
+
+{% endblock %}

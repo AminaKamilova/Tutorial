@@ -1,0 +1,31 @@
+{% extends "main/layout.html" %}
+{% load static %}
+
+{% block title %}
+  {% if course %}Редактирование курса {{ course.course_name }}{% else %}Создание нового курса{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/course.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="course-form-container">
+  <form method="post" enctype="multipart/form-data" class="auth-form">
+    {% csrf_token %}
+
+    {{form.as_p}}
+    
+    <footer class="form-footer">
+      {% if course_id != 0 %}
+      <a href="{% url 'delete_course' course_id=course_id %}" id="delete-course-btn" class="btn danger">Удалить курс</a>
+      {% endif %}
+      <button type="submit" class="btn primary">Сохранить</button>
+    </footer>
+  </form>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'main/js/course_form.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,248 @@
+.courses-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2.01rem;
+  padding: var(--section-padding);
+  max-width: 1072px;
+  margin: 107.2px auto 0;
+  min-height: calc(100vh - 150px);
+}
+
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.01rem;
+  padding: var(--section-padding);
+  max-width: 1072px;
+  margin: 0 auto;
+  min-height: calc(100vh - 150px);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 20.1px;
+  padding: var(--section-padding);
+  margin-bottom: var(--section-padding);
+}
+
+.section-title {
+  font-family: var(--font-current);
+  font-weight: 500;
+  font-size: 18.09px;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.section-arrow {
+  width: 17.09px;
+  height: 7.5px;
+}
+
+.courses-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding: var(--section-padding);
+  margin-bottom: 20px;
+}
+
+.course-card {
+  flex: 1 1 451.58px;
+  background-color: var(--gray-light);
+  border-radius: 21.07px;
+  padding: 24.58px;
+  box-sizing: border-box;
+}
+
+.card-content {
+  display: flex;
+  gap: 16.47px;
+}
+
+.course-image-container {
+  width: 99.83px;
+  height: 131.99px;
+  background-color: #9747FF;
+  border-radius: 18px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.course-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.course-details {
+  display: flex;
+  flex-direction: column;
+  gap: 11.39px;
+  flex-grow: 1;
+}
+
+.course-category {
+  font-family: var(--font-current);
+  background-color: #048ba8;
+  color: white;
+  padding: 0.5rem 2rem;
+  border-radius: 0.335rem;
+  align-self: flex-start;
+  font-weight: 500;
+  font-size: 10pt;
+}
+
+.course-title {
+  font-family: var(--font-current);
+  font-weight: 500;
+  font-size: 18.83px;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.course-meta {
+  display: flex;
+  align-items: center;
+  gap: 8.71px;
+}
+
+.meta-icon {
+  width: 16.08px;
+  height: 16.08px;
+}
+
+.meta-text {
+  font-family: var(--font-current);
+  font-size: 14.14px;
+  color: var(--primary-color);
+}
+
+.course-description {
+  font-family: var(--font-current);
+  font-size: 14.14px;
+  color: var(--primary-color);
+  margin: 0;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .card-content {
+    flex-direction: column;
+  }
+
+  .course-image-container {
+    width: 100%;
+    height: 134px;
+  }
+
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.add-course-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.add-course-button.visible {
+  opacity: 1;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+/* Стили для кнопки добавления курса */
+.header-actions {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 var(--section-padding);
+    margin-bottom: 20px;
+}
+
+.add-course-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background-color: #381AC5;
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-lg);
+    font-family: var(--font-current);
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(12, 6, 43, 0.1);
+}
+
+
+.plus-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.add-course-btn:hover .plus-icon {
+    transform: rotate(90deg);
+}
+
+/* Стили для плавающей кнопки (мобильные устройства) */
+.floating-add-btn {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 20px rgba(12, 6, 43, 0.3);
+    cursor: pointer;
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.floating-add-btn:hover {
+    background-color: var(--primary-light);
+    transform: scale(1.1);
+}
+
+.floating-add-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    .add-course-btn {
+        display: none;
+    }
+
+    .floating-add-btn {
+        display: flex;
+    }
+
+    .header-actions {
+        margin-bottom: 10px;
+    }
+}
