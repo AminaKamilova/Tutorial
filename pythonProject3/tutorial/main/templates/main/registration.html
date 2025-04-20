@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style_registration.css" />
+    <style>
+      .modal-overlay {
+        display: none; /* Сначала скрываем модальное окно */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="modal-overlay" id="registrationModal">
+      <div class="screen">
+        <div class="frame">
+          <div class="div-wrapper">
+            <p class="text-wrapper">Зарегистрируйтесь,&nbsp;&nbsp;чтобы получить доступ ко всем функциям</p>
+          </div>
+          <div class="div">
+            <div class="view" onclick="window.location.href='https://accounts.google.com'">
+              <div class="text-wrapper-2">Продолжить с Google</div>
+              <img class="img" src="img/frame.svg" />
+            </div>
+            <div class="view">
+              <div class="text-wrapper-3">Продолжить с Apple</div>
+              <img class="vector" src="img/vector.svg" />
+            </div>
+            <div class="frame-2">
+              <div class="line"></div>
+              <div class="text-wrapper-4">ИЛИ</div>
+              <div class="line"></div>
+            </div>
+            <div class="frame-wrapper" onclick="window.location.href='registration_email.html'">
+              <div class="frame-3"><div class="text-wrapper-5">Продолжить с электронной почтой</div></div>
+            </div>
+            <div class="tutorial-wrapper">
+              <p class="tutorial">
+                <span class="span">Продолжая, вы соглашаетесь с </span>
+                <span class="text-wrapper-6">Условиями использования</span>
+                <span class="span"> и подтверждаете, что ознакомились с </span>
+                <span class="text-wrapper-7">Политикой конфиденциальности</span>
+                <span class="span">.</span>
+              </p>
+            </div>
+            <div class="view-2" onclick="window.location.href='login.html'">
+              <div class="frame-4">
+                <p class="p">
+                  <span class="text-wrapper-8">Уже есть аккаунт?</span> <span class="text-wrapper-9"> Войти</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('registrationModal').style.display = 'flex';
+      });
+
+      // Закрытие модального окна при клике вне его области
+      document.getElementById('registrationModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+          this.style.display = 'none';
+        }
+      });
+    </script>
+  </body>
+</html>

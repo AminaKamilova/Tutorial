@@ -1,0 +1,19 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2 class="auth-title">Вход в систему</h2>
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="auth-submit">Войти</button>
+        </form>
+        <div class="auth-links">
+            <a href="{% url 'registration_email' %}">Нет аккаунта? Зарегистрируйтесь</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

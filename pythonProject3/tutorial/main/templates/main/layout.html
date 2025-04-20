@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Образовательная платформа{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/globals.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="app-container">
+        <header class="header-container">
+            <div class="auth-buttons">
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'registration_email' %}"><button class="auth-button auth-button--primary">Зарегистрироваться</button></a>
+                    <a href="{% url 'login' %}"><button class="auth-button auth-button--secondary">Войти</button></a>
+                {% endif %}
+            </div>
+
+            {% if user.is_authenticated %}
+            <div class="user-profile" id="profileButton">
+                <div class="profile-icon">
+                    <img src="{% static 'main/img/account.svg' %}" alt="Профиль пользователя">
+                </div>
+            </div>
+            {% endif %}
+        </header>
+
+        <!-- Панель настроек -->
+        <div class="settings-panel" id="settingsPanel">
+            <div class="settings-content">
+                {% if user.is_authenticated %}
+                <div class="user-profile">
+                    <div class="profile-icon">
+                        <img src="{% static 'main/img/account.svg' %}" alt="Профиль пользователя">
+                    </div>
+                    <div class="settings-user-info">
+                        <div class="settings-username">{{ user.user_name }}</div>
+                        <div class="settings-email">{{ user.user_email }}</div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="settings-header">
+                    <div class="settings-title">Настройки</div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="settings-section-title">Основные</div>
+                    <div class="settings-item theme-toggle" id="themeToggle">
+                        <div class="settings-item-icon">
+                            <img src="{% static 'main/img/theme.svg' %}" alt="Тема">
+                        </div>
+                        <div class="settings-item-name">Темная тема</div>
+                        <div class="settings-item-value">
+                            <label class="theme-switch">
+                                <input type="checkbox" id="themeCheckbox">
+                                <span class="theme-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings-item font-selector">
+                        <div class="settings-item-icon">
+                            <img src="{% static 'main/img/font.svg' %}" alt="Шрифт">
+                        </div>
+                        <div class="settings-item-name">Шрифт</div>
+                        <div class="settings-item-value" id="currentFont">Стандартный</div>
+                        <div class="font-dropdown-icon">▼</div>
+
+                        <div class="font-dropdown">
+                            <div class="font-option" data-font="default">
+                                <span style="font-family: var(--font-default)">Стандартный</span>
+                            </div>
+                            <div class="font-option" data-font="serif">
+                                <span style="font-family: var(--font-serif)">С засечками</span>
+                            </div>
+                            <div class="font-option" data-font="monospace">
+                                <span style="font-family: var(--font-monospace)">Моноширинный</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="settings-section-title">Прочее</div>
+                    <div class="settings-item">
+                        <div class="settings-item-icon">
+                            <img src="{% static 'main/img/info.svg' %}" alt="О приложении">
+                        </div>
+                        <div class="settings-item-name">О приложении</div>
+                    </div>
+                    {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'logout' %}" class="logout-form">
+                        {% csrf_token %}
+                        <button type="submit" class="settings-item logout-button">
+                            <div class="settings-item-icon">
+                                <img src="{% static 'main/img/logout.svg' %}" alt="Выход">
+                            </div>
+                            <div class="settings-item-name">Выйти</div>
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="main-layout">
+            <!-- Левая панель -->
+            <nav class="sidebar">
+                <div class="sidebar-header">
+                    <img class="sidebar-logo" src="{% static 'main/img/logo.svg' %}" alt="Логотип платформы">
+                </div>
+
+                <ul class="nav-menu">
+                    <a href="{% url 'home' %}"><li class="nav-item">
+                        <img src="{% static 'main/img/home.svg' %}" alt="">
+                        <span>Главная</span>
+                    </li></a>
+                    <a href="{% url 'courses' %}"><li class="nav-item">
+                        <img src="{% static 'main/img/courses.svg' %}" alt="">
+                        <span>Курсы</span>
+                    </li></a>
+                    <a href="{% url 'categories' %}"><li class="nav-item">
+                        <img src="{% static 'main/img/categories.svg' %}" alt="">
+                        <span>Категории</span>
+                    </li></a>
+<!--                    {% if user.is_authenticated %}-->
+                    <a href="{% url 'reports' %}"><li class="nav-item">
+                        <img src="{% static 'main/img/reports.svg' %}" alt="">
+                        <span>Отчеты</span>
+                    </li></a>
+<!--                    {% endif %}-->
+                </ul>
+            </nav>
+            <main class="content-area">
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Управление панелью настроек
+            const profileButton = document.getElementById('profileButton');
+            const settingsPanel = document.getElementById('settingsPanel');
+            const panelProfileButton = settingsPanel.querySelector('.user-profile');
+
+            if (profileButton && settingsPanel && panelProfileButton) {
+                // Обработчик для кнопки профиля в хедере
+                profileButton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    settingsPanel.classList.toggle('active');
+                });
+
+                // Обработчик для кнопки профиля внутри панели
+                panelProfileButton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    settingsPanel.classList.remove('active');
+                });
+
+                // Закрытие панели при клике вне ее
+                document.addEventListener('click', function(event) {
+                    if (!settingsPanel.contains(event.target) &&
+                        !profileButton.contains(event.target)) {
+                        settingsPanel.classList.remove('active');
+                    }
+                });
+            }
+
+            function applyFont(fontType) {
+                const root = document.documentElement;
+                const currentFontElement = document.getElementById('currentFont');
+
+                switch(fontType) {
+                    case 'serif':
+                        root.style.setProperty('--font-current', 'var(--font-serif)');
+                        currentFontElement.textContent = 'С засечками';
+                        break;
+                    case 'monospace':
+                        root.style.setProperty('--font-current', 'var(--font-monospace)');
+                        currentFontElement.textContent = 'Моноширинный';
+                        break;
+                    default:
+                        root.style.setProperty('--font-current', 'var(--font-default)');
+                        currentFontElement.textContent = 'Стандартный';
+                }
+            }
+
+            // Инициализация выбора шрифта
+            const fontOptions = document.querySelectorAll('.font-option');
+
+            fontOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const fontType = this.dataset.font;
+                    applyFont(fontType);
+                    localStorage.setItem('selectedFont', fontType);
+                });
+            });
+
+            // Восстановление сохраненного шрифта
+            const savedFont = localStorage.getItem('selectedFont');
+            if (savedFont) {
+                applyFont(savedFont);
+            }
+
+            // Управление темой
+            const themeToggle = document.getElementById('themeToggle');
+            const themeCheckbox = document.getElementById('themeCheckbox');
+
+            function applyTheme(isDark) {
+                const html = document.documentElement;
+                if (isDark) {
+                    html.setAttribute('data-theme', 'dark');
+                    themeCheckbox.checked = true;
+                } else {
+                    html.removeAttribute('data-theme');
+                    themeCheckbox.checked = false;
+                }
+                localStorage.setItem('darkTheme', isDark ? 'enabled' : 'disabled');
+            }
+
+            // Проверка сохраненной темы
+            const savedTheme = localStorage.getItem('darkTheme');
+            if (savedTheme === 'enabled') {
+                applyTheme(true);
+            }
+
+            // Обработчик переключения темы
+            themeToggle.addEventListener('click', function(e) {
+                if (e.target.tagName !== 'INPUT') {
+                    const isDark = !document.documentElement.hasAttribute('data-theme');
+                    applyTheme(isDark);
+                }
+            });
+
+            themeCheckbox.addEventListener('change', function() {
+                applyTheme(this.checked);
+            });
+
+            // Закрытие при нажатии Escape
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    settingsPanel.classList.remove('active');
+                }
+            });
+        });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,220 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.01rem;
+  padding: var(--section-padding);
+  max-width: 1072px;
+  margin: 0 auto;
+  min-height: calc(100vh - 150px);
+}
+
+.courses-section {
+  width: 100%;
+  max-width: 1077.36px;
+  margin: 107.2px auto 0;
+  padding: 0 var(--section-padding);
+  box-sizing: border-box;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1.005rem;
+  padding: var(--section-padding);
+  margin-bottom: var(--section-padding);
+}
+
+.section-title {
+  font-family: var(--font-current);
+  font-weight: 500;
+  color: var(--primary-color);
+  font-size: 1.139rem;
+  margin: 0;
+}
+
+.arrow-icon {
+  width: 1.206rem;
+  height: 1.072rem;
+}
+
+.courses-scroll-container {
+  width: 100%;
+  margin-top: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px; /* Для скроллбара */
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-lighter) var(--gray-light);
+}
+
+.courses-scroll-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.courses-scroll-container::-webkit-scrollbar-track {
+  background: var(--gray-light);
+  border-radius: 3px;
+}
+
+.courses-scroll-container::-webkit-scrollbar-thumb {
+  background-color: var(--primary-lighter);
+  border-radius: 3px;
+}
+
+.courses-grid {
+  display: inline-flex;
+  gap: 11.39px;
+  padding: 0 var(--section-padding);
+  min-width: max-content;
+}
+
+.course-card {
+  background-color: var(--gray-light);
+  border-radius: 21.07px;
+  padding: 16.47px;
+  width: 450px;
+  flex-shrink: 0;
+}
+
+.card-content {
+  display: flex;
+  gap: 1.005rem;
+  padding: 1.005rem;
+}
+
+.image-container {
+  width: 99.83px;
+  height: 131.99px;
+  background: linear-gradient(135deg, #9747ff 0%, #381ac5 100%);
+  border-radius: 18px;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.course-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.course-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.536rem;
+  flex-grow: 1;
+}
+
+.course-category {
+  font-family: var(--font-current);
+  background-color: #048ba8;
+  color: white;
+  padding: 0.5rem 2rem;
+  border-radius: 0.335rem;
+  align-self: flex-start;
+  font-weight: 500;
+  font-size: 10pt;
+}
+
+.course-title {
+  font-family: var(--font-current);
+  font-weight: 500;
+  color: var(--primary-color);
+  font-size: 1.005rem;
+  margin: 0;
+}
+
+.course-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.469rem;
+}
+
+.meta-icon {
+  width: 0.804rem;
+  height: 0.804rem;
+}
+
+.meta-text {
+  font-family: var(--font-current);
+  font-weight: 400;
+  color: var(--primary-color);
+  font-size: 0.8rem;
+}
+
+.course-description {
+  font-family: var(--font-current);
+  font-weight: 400;
+  color: var(--primary-color);
+  font-size: 0.8rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(167.5px, 1fr));
+  gap: 1.005rem;
+  padding: 0 var(--section-padding);
+}
+
+.category-card {
+  border-radius: 0.737rem;
+  padding: 1.005rem 1.34rem;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.category-title {
+  font-family: var(--font-current);
+  font-weight: 500;
+  font-size: 1.005rem;
+  margin: 0 0 0.335rem 0;
+}
+
+.courses-count {
+  font-family: var(--font-current);
+  font-weight: 400;
+  font-size: 0.737rem;
+}
+
+.category-languages { background-color: #ea7af4; }
+.category-programming { background-color: #048ba8; }
+.category-business { background-color: #3b0086; }
+.category-design { background-color: #b43e8f; }
+.category-music { background-color: #4d4eb4; }
+.category-psychology { background-color: #6200b3; }
+.category-exams { background-color: #290628; }
+
+@media (max-width: 768px) {
+  .courses-grid {
+    display: flex;
+  }
+
+  .course-card {
+    min-width: 280px;
+  }
+
+  .categories-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .categories-grid {
+    grid-template-columns: 1fr;
+  }
+}

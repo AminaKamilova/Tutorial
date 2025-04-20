@@ -1,0 +1,167 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block title %}Главная{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/style_categories.css' %}"/>
+{% endblock %}
+
+{% block content %}
+<!-- Основной контейнер страницы -->
+<main class="page-container">
+  <div class="categories-section">
+    <div class="section-header">
+      <h1 class="section-title">Все категории</h1>
+      <img class="section-arrow" src="" alt="Стрелка" />
+    </div>
+    <button class="add-course-btn" onclick="window.location.href='{% url 'add_category' %}'">
+                <i>+</i> Добавить категорию
+            </button>
+    <div class="content-wrapper">
+      <!-- Блок с категориями -->
+      <aside class="categories-list">
+        <div class="category-item" style="background-color: #ea7af4;" data-category="languages">
+          <span class="category-name">Языки</span>
+        </div>
+        <div class="category-item" style="background-color: #3b0086;" data-category="business">
+          <span class="category-name">Бизнес</span>
+        </div>
+        <div class="category-item" style="background-color: #6200b3;" data-category="psychology">
+          <span class="category-name">Психология</span>
+        </div>
+        <div class="category-item" style="background-color: #4d4eb4;" data-category="design">
+          <span class="category-name">Дизайн</span>
+        </div>
+        <div class="category-item" style="background-color: #048ba8;" data-category="programming">
+          <span class="category-name">Программирование</span>
+        </div>
+        <div class="category-item" style="background-color: #0a6411;" data-category="health">
+          <span class="category-name">Здоровье</span>
+        </div>
+        <div class="category-item" style="background-color: #6f006c;" data-category="exams">
+          <span class="category-name">Подготовка к экзаменам</span>
+        </div>
+        <div class="category-item" style="background-color: #630704;" data-category="editing">
+          <span class="category-name">Монтаж</span>
+        </div>
+      </aside>
+
+      <!-- Блок с курсами -->
+      <section class="courses-list">
+        <a href="{% url 'registration_email' %}"><article class="course-card">
+          <div class="course-content">
+            <div class="course-image-container">
+              <img class="course-image" src="" alt="Изображение курса" />
+            </div>
+            <div class="course-info">
+              <div class="course-category" style="background-color: #048ba8;">
+                <span class="category-label">Программирование</span>
+              </div>
+              <h2 class="course-title">C# с 0 до профи</h2>
+              <div class="course-meta">
+                <img class="meta-icon" src="" alt="Иконка даты" />
+                <span class="meta-text">01.01.2024 - 12.01.2024</span>
+              </div>
+              <p class="course-description">Вас обучат основам программирования, созданию консольных игр и многому другому</p>
+            </div>
+          </div>
+        </article></a>
+
+        <a href="{% url 'registration_email' %}">
+          <article class="course-card">
+          <div class="course-content">
+            <div class="course-image-container">
+              <img class="course-image" src="" alt="Изображение курса" />
+            </div>
+            <div class="course-info">
+              <div class="course-category" style="background-color: #3b0086;">
+                <span class="category-label">Бизнес</span>
+              </div>
+              <h2 class="course-title">Тайм-менеджмент</h2>
+              <div class="course-meta">
+                <img class="meta-icon" src="" alt="Иконка даты" />
+                <span class="meta-text">01.01.2024 - 12.01.2024</span>
+              </div>
+              <p class="course-description">Вас обучат основам программирования, созданию консольных игр и многому другому</p>
+            </div>
+          </div>
+        </article>
+          </a>
+
+        <article class="course-card">
+          <div class="course-content">
+            <div class="course-image-container">
+              <img class="course-image" src="" alt="Изображение курса" />
+            </div>
+            <div class="course-info">
+              <div class="course-category" style="background-color: #4d4eb4;">
+                <span class="category-label">Дизайн</span>
+              </div>
+              <h2 class="course-title">Графический дизайн</h2>
+              <div class="course-meta">
+                <img class="meta-icon" src="" alt="Иконка даты" />
+                <span class="meta-text">01.01.2024 - 12.01.2024</span>
+              </div>
+              <p class="course-description">Вас обучат основам программирования, созданию консольных игр и многому другому</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-content">
+            <div class="course-image-container">
+              <img class="course-image" src="" alt="Изображение курса" />
+            </div>
+            <div class="course-info">
+              <div class="course-category" style="background-color: #630704;">
+                <span class="category-label">Монтаж</span>
+              </div>
+              <h2 class="course-title">C# с 0 до профи</h2>
+              <p class="course-description">Вас обучат основам программирования, созданию консольных игр и многому другому</p>
+            </div>
+          </div>
+        </article>
+      </section>
+    </div>
+  </div>
+</main>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const categoryItems = document.querySelectorAll('.category-item');
+  let activeCategory = null;
+
+  categoryItems.forEach(item => {
+    // Обработчик наведения
+    item.addEventListener('mouseenter', function() {
+      if (!this.classList.contains('active')) {
+        this.style.transform = 'translateX(24.79px)'; /* 37px * 0.67 */
+      }
+    });
+
+    // Обработчик ухода курсора
+    item.addEventListener('mouseleave', function() {
+      if (!this.classList.contains('active')) {
+        this.style.transform = 'translateX(0)';
+      }
+    });
+
+    // Обработчик клика
+    item.addEventListener('click', function() {
+      // Сбрасываем предыдущую активную категорию
+      if (activeCategory) {
+        activeCategory.classList.remove('active');
+        activeCategory.style.transform = 'translateX(0)';
+      }
+
+      // Устанавливаем новую активную категорию
+      this.classList.add('active');
+      this.style.transform = 'translateX(24.79px)'; /* 37px * 0.67 */
+      activeCategory = this;
+
+      // Фильтрация курсов
+      const category = this.getAttribute('data-category');
+      console.log('Выбрана категория:', category);
+    });
+  });
+});
+</script>
+{% endblock %}

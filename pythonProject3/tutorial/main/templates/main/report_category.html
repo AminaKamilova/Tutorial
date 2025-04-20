@@ -1,0 +1,35 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Отчет по категориям" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/reports.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-header">
+        <h1>{% trans "Отчет по категориям" %}</h1>
+    </div>
+
+    <form method="post" class="report-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+            {{ form.category.label_tag }}
+            {{ form.category }}
+            {% if form.category.errors %}
+                <div class="error-message">{{ form.category.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn primary">
+                {% trans "Сформировать отчет" %}
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

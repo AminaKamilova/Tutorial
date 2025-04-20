@@ -1,0 +1,45 @@
+{% extends "main/layout.html" %}
+{% load static %}
+
+{% block title %}{{ course.course_name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/course_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="course-detail-container">
+    <div class="course-header">
+        <h1>{{ course.course_name }}</h1>
+        <div class="course-meta">
+            <span class="course-category">{{ course.category_id.category_name }}</span>
+            <span class="course-dates">{{ course.start_date|date:"d.m.Y" }} - {{ course.end_date|date:"d.m.Y" }}</span>
+        </div>
+    </div>
+
+    <div class="course-actions">
+        <a href="{% url 'add_course' course_id=course.id %}" class="btn edit-btn">Редактировать</a>
+        <!-- <a href="" class="btn delete-btn">Удалить</a> -->
+    </div>
+
+    <div class="course-description">
+        <h2>Название курса</h2>
+        <p>{{ course.course_name }}</p>
+    </div>
+
+    <div class="lessons-section">
+        <h2>Уроки</h2>
+        <ul class="lessons-list">
+            {% for lesson in lessons %}
+            <a href="{% url 'add_lesson' lesson_id=lesson.id %}">
+            <li class="lesson-item">
+                <h3>Урок {{ lesson.lesson_num }}: {{ lesson.course_name }}</h3>
+                <p>{{ lesson.description }}</p>
+            </li>
+            </a>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'add_lesson' lesson_id=0 %}">Добавить урок</a>
+    </div>
+</main>
+{% endblock %}
