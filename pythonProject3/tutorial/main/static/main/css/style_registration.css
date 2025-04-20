@@ -1,0 +1,293 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none; /* По умолчанию скрыто */
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+.screen {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24.79px;
+  padding: 38.19px 38.19px 28.81px;
+  position: relative;
+  background-color: #fffdfd;
+  border-radius: 33.5px;
+  overflow: hidden;
+  max-width: 60%;
+  box-shadow: 0 6.7px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.screen .frame {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24.79px;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.screen .div-wrapper {
+  display: flex;
+  width: 327px;
+  height: 47.57px;
+  align-items: center;
+  justify-content: center;
+  gap: 6.7px;
+  position: relative;
+}
+
+.screen .text-wrapper {
+  width: 327.63px;
+  height: 47.57px;
+  margin-left: -0.50px;
+  margin-right: -0.50px;
+  font-family: "AV Fontimer-SemiBold", Helvetica;
+  font-weight: 402;
+  color: var(--x);
+  font-size: 18.76px;
+  text-align: center;
+  position: relative;
+  margin-top: -1.00px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.screen .div {
+  display: flex;
+  flex-direction: column;
+  width: 359px;
+  align-items: center;
+  gap: 13.4px;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.screen .view {
+  height: 51px;
+  background-color: #f7f7f7;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  border-radius: 12.1px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.screen .view:hover {
+  background-color: #eaeaea;
+}
+
+.screen .text-wrapper-2 {
+  position: absolute;
+  top: 28px;
+  left: 147px;
+  font-family: "AV Fontimer-Regular", Helvetica;
+  font-weight: 400;
+  color: var(--x);
+  font-size: 24px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.screen .img {
+  position: absolute;
+  width: 29px;
+  height: 29px;
+  top: 24px;
+  left: 30px;
+}
+
+.screen .text-wrapper-3 {
+  position: absolute;
+  top: 28px;
+  left: 155px;
+  font-family: "AV Fontimer-Regular", Helvetica;
+  font-weight: 400;
+  color: var(--x);
+  font-size: 24px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.screen .vector {
+  position: absolute;
+  width: 25px;
+  height: 28px;
+  top: 24px;
+  left: 30px;
+}
+
+.screen .frame-2 {
+  display: flex;
+  width: 536px;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.screen .line {
+  position: relative;
+  width: 224px;
+  height: 2px;
+  background-color: #0c062bcc;
+}
+
+.screen .text-wrapper-4 {
+  width: fit-content;
+  font-family: "AV Fontimer-Regular", Helvetica;
+  font-weight: 400;
+  color: #0c062bcc;
+  font-size: 20px;
+  white-space: nowrap;
+  position: relative;
+  margin-top: -1.00px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.screen .frame-wrapper {
+  height: 77px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  border-radius: 17.98px;
+  overflow: hidden;
+}
+
+.screen .frame-3 {
+  display: flex;
+  width: 391px;
+  justify-content: space-around;
+  top: 30px;
+  left: 72px;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  cursor: pointer;
+}
+
+.screen .text-wrapper-5 {
+  width: fit-content;
+  margin-left: -5.00px;
+  margin-right: -5.00px;
+  font-family: "AV Fontimer-Medium", Helvetica;
+  font-weight: 500;
+  color: var(--m-hw-400);
+  font-size: 24px;
+  white-space: nowrap;
+  position: relative;
+  margin-top: -1.00px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.screen .tutorial-wrapper {
+  display: flex;
+  width: 418px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0px 3px;
+  position: relative;
+  flex: 0 0 auto;
+  opacity: 0.7;
+}
+
+.screen .tutorial {
+  position: relative;
+  flex: 1;
+  margin-top: -1.00px;
+  font-family: "AV Fontimer-Regular", Helvetica;
+  font-weight: 400;
+  color: var(--x);
+  font-size: 20px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.screen .span {
+  font-family: "AV Fontimer-Regular", Helvetica;
+  font-weight: 400;
+  color: #0c062b;
+  font-size: 20px;
+  letter-spacing: 0;
+}
+
+.screen .text-wrapper-6 {
+  font-family: "AV Fontimer-SemiBold", Helvetica;
+  font-weight: 600;
+  color: #381ac5;
+  cursor: pointer;
+}
+
+.screen .text-wrapper-7 {
+  font-family: "AV Fontimer-Medium", Helvetica;
+  font-weight: 500;
+  color: #381ac5;
+  cursor: pointer;
+}
+
+.screen .view-2 {
+  display: flex;
+  flex-direction: column;
+  height: 77px;
+  align-items: center;
+  justify-content: space-around;
+  gap: 10px;
+  padding: 30px 31px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  border-radius: 17.98px;
+  overflow: hidden;
+}
+
+.screen .frame-4 {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  cursor: pointer;
+}
+
+.screen .p {
+  width: fit-content;
+  font-family: "AV Fontimer-Medium", Helvetica;
+  font-weight: 500;
+  color: transparent;
+  font-size: 24px;
+  white-space: nowrap;
+  position: relative;
+  margin-top: -1.00px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.screen .text-wrapper-8 {
+  color: #0c062b;
+}
+
+.screen .text-wrapper-9 {
+  color: #381ac5;
+  cursor: pointer;
+}

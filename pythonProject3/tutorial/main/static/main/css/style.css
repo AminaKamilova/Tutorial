@@ -1,0 +1,585 @@
+:root {
+  --primary-color: #0C062B;
+  --primary-light: #381ac5;
+  --primary-lighter: #b3a5f3;
+  --secondary-color: #615889;
+  --white: #ffffff;
+  --gray-light: #f7f7f7;
+  --gray-lighter: #f0f0f0;
+  --border-radius-lg: 32.63px;
+  --border-radius-md: 21.07px;
+  --border-radius-sm: 9.62px;
+  --font-default: 'AV Fontimer-Medium', Helvetica, sans-serif;
+  --font-serif: 'Georgia', serif;
+  --font-monospace: 'Courier New', monospace;
+  --font-current: var(--font-default);
+  --button-height: 39.53px;
+  --button-primary-width: 212.39px;
+  --button-secondary-width: 99.83px;
+  --button-text-size: 16.58px;
+  --header-padding: 24.79px;
+  --section-padding: 13.4px;
+
+  /* Новые переменные для темной темы */
+  --bg-color: #ffffff;
+  --text-color: #0C062B;
+  --sidebar-bg: #ffffff;
+  --header-bg: #ffffff;
+  --settings-bg: #ffffff;
+  --card-bg: #ffffff;
+  --border-color: #e0e0e0;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+  --hover-bg: #f0f0f0;
+}
+
+/* Темная тема */
+[data-theme="dark"] {
+  --primary-color: #b3a5f3;
+  --primary-light: #8a7ad1;
+  --primary-lighter: #4a3d8a;
+  --secondary-color: #a89fd1;
+  --white: #1e1e1e;
+  --gray-light: #2d2d2d;
+  --gray-lighter: #252525;
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --sidebar-bg: #1e1e1e;
+  --header-bg: #1e1e1e;
+  --settings-bg: #1e1e1e;
+  --card-bg: #1e1e1e;
+  --border-color: #333333;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --hover-bg: #2d2d2d;
+}
+
+.course-card {
+  transition: all 0.3s ease;
+  transform: translateY(0);
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.14);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-current);
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Верхняя панель */
+.header-container {
+  position: fixed;
+  top: 0;
+  left: 158.12px;
+  right: 0;
+  height: 99.16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 var(--header-padding);
+  background-color: var(--header-bg);
+  z-index: 90;
+  box-shadow: 0 2px 10px var(--shadow-color);
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 37px;
+  margin-right: auto;
+  margin-left: var(--header-padding);
+}
+
+.auth-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--button-height);
+  font-family: var(--font-current);
+  font-size: var(--button-text-size);
+  font-weight: 500;
+  border-radius: var(--border-radius-lg);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0 40px;
+  white-space: nowrap;
+}
+
+.auth-button--primary {
+  width: var(--button-primary-width);
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.auth-button--secondary {
+  width: var(--button-secondary-width);
+  background-color: var(--gray-light);
+  color: var(--primary-color);
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.profile-icon {
+  width: 51.59px;
+  height: 49.58px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.profile-icon img {
+  width: 33.5px;
+  height: 33.5px;
+}
+
+/* auth forms */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px;
+}
+
+.auth-card {
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px var(--shadow-color);
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-title {
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.auth-form p {
+    margin: 0;
+}
+
+.auth-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: var(--white);
+    color: var(--text-color);
+}
+
+.auth-submit {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.auth-submit:hover {
+    background-color: var(--primary-light);
+}
+
+.auth-links {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.auth-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+.errorlist {
+    color: #e74c3c;
+    margin-bottom: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+/* Левая панель */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 158.12px;
+  height: 100vh;
+  background-color: var(--sidebar-bg);
+  z-index: 67;
+  box-shadow: 2px 0 10px var(--shadow-color);
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-logo {
+  max-width: 100%;
+  height: auto;
+}
+
+.nav-menu {
+  list-style: none;
+  color: var(--primary-color);
+  padding-bottom: 20px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 14.74px;
+  padding: 13.4px 38.19px;
+  font-family: var(--font-current);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-color);
+}
+
+.logout-form {
+    background-color: rgba(244, 67, 54, 0.1);
+    border: none;
+    border-color:  rgba(244, 67, 54, 0.1);
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+.logout-button {
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    font-family: var(--font-current);
+    font-size: 16px;
+    font-weight: 400;
+    color:  rgba(244, 67, 54, 0.1);
+    cursor: pointer;
+    padding: 17px 20px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin: 0;
+}
+
+.logout-button:hover,
+.logout-form:hover .logout-button {
+    background-color:#f44336;
+}
+
+.settings-item.logout-form {
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item img {
+  width: 14.27px;
+  height: 14.27px;
+}
+
+.nav-item.active {
+  background-color: var(--gray-lighter);
+  position: relative;
+}
+
+.nav-item.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: var(--primary-color);
+}
+
+.nav-item:hover:not(.active) {
+  background-color: var(--hover-bg);
+}
+
+/* Основное содержимое */
+.main-layout {
+  margin-left: 158.12px;
+  margin-top: 20px;
+  padding: 0;
+  flex: 1;
+}
+
+.content-area {
+  max-width: 1072px;
+  margin: 0;
+  width: 100%;
+  padding: 0 20px;
+}
+
+/* Панель настроек */
+.settings-panel {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 400px;
+  height: 100vh;
+  background-color: var(--settings-bg);
+  box-shadow: -2px 0 10px var(--shadow-color);
+  z-index: 95;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+}
+
+.settings-panel.active {
+  right: 0;
+}
+
+.settings-content {
+  padding: 20px;
+}
+
+.settings-header {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 20px;
+}
+
+.settings-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.settings-section {
+  margin-bottom: 30px;
+}
+
+.settings-section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--primary-light);
+  margin-bottom: 15px;
+  padding-left: 18px;
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  padding: 17px 20px;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  position: relative;
+}
+
+.settings-item:hover {
+  background-color: var(--hover-bg);
+}
+
+.settings-item-icon {
+  margin-right: 22px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-item-icon img {
+  width: 100%;
+  height: auto;
+}
+
+.settings-item-name {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-color);
+  flex-grow: 1;
+}
+
+.settings-item-value {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--secondary-color);
+  margin-left: 10px;
+}
+
+/* Стили для переключателя темы */
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.theme-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--gray-light);
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.theme-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--white);
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .theme-slider {
+  background-color: var(--primary-color);
+}
+
+input:checked + .theme-slider:before {
+  transform: translateX(26px);
+}
+
+/* Стили для выбора шрифта */
+.font-selector {
+  position: relative;
+}
+
+.font-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  box-shadow: 0 2px 10px var(--shadow-color);
+  z-index: 100;
+}
+
+.font-dropdown-icon {
+  margin-left: 10px;
+  font-size: 12px;
+  color: var(--secondary-color);
+}
+
+.font-selector:hover .font-dropdown {
+  display: block;
+}
+
+.font-option {
+  padding: 12px 20px;
+  cursor: pointer;
+  color: var(--text-color);
+  background-color: var(--white);
+}
+
+.font-option:hover {
+  background-color: var(--hover-bg);
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .main-layout {
+    margin-left: 0;
+    margin-top: 0;
+    padding-top: 99.16px;
+  }
+
+  .header-container {
+    left: 0;
+  }
+
+  .settings-panel {
+    width: 100%;
+    right: -100%;
+  }
+}
+
+/* Затемнение основного контента при открытой панели */
+.settings-panel.active ~ .main-layout::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 158.12px;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 94;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .settings-panel.active ~ .main-layout::after {
+    left: 0;
+  }
+}

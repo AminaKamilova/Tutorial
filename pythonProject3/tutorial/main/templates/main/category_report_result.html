@@ -1,0 +1,28 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Отчет по категориям" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/reports.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-header">
+        <h1>{% trans "Отчет по категориям" %}</h1>
+    </div>
+    {% for course in report_data %}
+    <div method="post" class="report-form1">
+        <p>Имя пользователя: {{ course.user_id.user_name }}</p>
+        <p>Название курса: {{ course.course_name }}</p>
+        <p>Дата начала: {{ course.start_date|date:"d.m.Y" }}</p>
+        <p>Продолжительность курса: {{ course.duration.days }} дней</p>
+        <p>Уроков: {{ course.lessons_count }}</p>
+        <br>
+    </div>
+    {% endfor %}
+    <a href="{% url 'reports' %}">Назад</a>
+</div>
+{% endblock %}

@@ -1,0 +1,165 @@
+{% extends "main/layout.html" %}
+{% load static %}
+
+{% block title %}Добавление новой категории{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/course.css' %}">
+
+<style>
+  .category-form-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 4px 20px var(--shadow-color);
+  }
+
+  .category-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .form-header h1 {
+    font-size: 24px;
+    color: var(--text-color);
+    margin: 0;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--secondary-color);
+    transition: color 0.2s ease;
+  }
+
+  .close-btn:hover {
+    color: var(--primary-color);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-group label {
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 16px;
+  }
+
+  .form-group input[type="text"],
+  .form-group textarea {
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    font-family: var(--font-current);
+    font-size: 15px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .form-group input[type="text"]:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 2px var(--primary-lighter);
+  }
+
+  .form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .form-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .btn {
+    padding: 12px 24px;
+    border-radius: var(--border-radius-sm);
+    font-family: var(--font-current);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+  }
+
+  .btn.primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+  }
+
+  .btn.primary:hover {
+    background-color: var(--primary-light);
+  }
+
+  @media (max-width: 768px) {
+    .category-form-container {
+      margin: 20px;
+      padding: 20px;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="category-form-container">
+    <form method="post" class="category-form" action="{% url 'add_category' %}">
+        {% csrf_token %}
+        <header class="form-header">
+            <h1>Добавление новой категории</h1>
+            <button type="button" class="close-btn" aria-label="Закрыть форму">×</button>
+        </header>
+
+        <!-- Исправленное поле category_name -->
+        <div class="form-group">
+            {{ form.category_name.label_tag }}  <!-- Автоматически генерирует правильный label -->
+            {{ form.category_name }}
+            {% if form.category_name.errors %}
+                <div class="error">{{ form.category_name.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Исправленное поле description -->
+        <div class="form-group">
+            {{ form.description.label_tag }}  <!-- Автоматически генерирует правильный label -->
+            {{ form.description }}
+            {% if form.description.errors %}
+                <div class="error">{{ form.description.errors }}</div>
+            {% endif %}
+        </div>
+
+        <footer class="form-footer">
+            <button type="submit" class="btn primary">Сохранить</button>
+        </footer>
+    </form>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.querySelector('.close-btn').addEventListener('click', function() {
+    window.history.back();
+  });
+</script>
+{% endblock %}

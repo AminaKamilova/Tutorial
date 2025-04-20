@@ -1,0 +1,64 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Отчеты" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/reports.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="reports-container">
+    <div class="form-container">
+        <div class="form-header">
+            <h1>{% trans "Отчет по категориям" %}</h1>
+        </div>
+
+        <form method="post" class="report-form">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ category_form.category.label_tag }}
+                {{ category_form.category }}
+                {% if category_form.category.errors %}
+                    <div class="error-message">{{ category_form.category.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn primary">
+                    {% trans "Сформировать отчет" %}
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <div class="form-header">
+            <h1>{% trans "Отчет по периоду" %}</h1>
+        </div>
+
+        <form method="post" class="report-form">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ period_form.start_date.label_tag }}
+                {{ period_form.start_date }}
+                {% if period_form.start_date.errors %}
+                    <div class="error-message">{{ period_form.start_date.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ period_form.end_date.label_tag }}
+                {{ period_form.end_date }}
+                {% if period_form.end_date.errors %}
+                    <div class="error-message">{{ period_form.end_date.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn primary">
+                    {% trans "Сформировать отчет" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

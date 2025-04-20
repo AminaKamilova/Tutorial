@@ -1,0 +1,85 @@
+
+    <section class="courses-section">
+        <div class="section-header">
+            <h2 class="section-title">Рекомендуем</h2>
+            <img class="arrow-icon" src="{% static 'main/img/move.svg' %}" alt="Стрелка">
+        </div>
+        <div class="courses-scroll-container">
+            <div class="courses-grid">
+                {% for course in courses %}
+                <article class="course-card">
+                    <a href="{% url 'course_detail' course_id=course.id %}">
+                        <div class="card-content">
+                            <div class="course-image-container">
+                                {% if course.image %}
+                                    <img class="course-image" src="{{ course.image.url }}" alt="{{ course.course_name }}" />
+                                {% else %}
+                                    <img class="course-image" src="{% static 'main/img/course-1.png' %}" alt="{{ course.course_name }}" />
+                                {% endif %}
+                            </div>
+                            <div class="course-details">
+                                <span class="course-category">{{ course.category_id.category_name }}</span>
+                                <h3 class="course-title">{{ course.course_name }}</h3>
+                                <div class="course-meta">
+                                    <img class="meta-icon" src="{% static 'main/img/calendar-icon.svg' %}" alt="Даты курса" />
+                                    <span class="meta-text">{{ course.start_date|date:"d.m.Y" }} - {{ course.end_date|date:"d.m.Y" }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                {% empty %}
+                <p>Курсы не найдены.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+     <section class="popular-categories">
+        <div class="section-header">
+            <h2 class="section-title">Популярные категории</h2>
+            <img class="arrow-icon" src="{% static 'main/img/move.svg' %}" alt="Стрелка">
+        </div>
+        <div class="categories-grid">
+            {% for category in popular_categories %}
+            <div class="category-card category-{{ forloop.counter }}">
+                <a href="{% url 'category_detail' category_id=category.id %}">
+                    <div class="category-content">
+                        <h3 class="category-title">{{ category.category_name }}</h3>
+                        <span class="courses-count">{{ category.course_count }} курсов</span>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+
+    </div>
+    <div class="courses-grid">
+        {% for course in courses %}
+        <article class="course-card">
+            <a href="{% url 'course_detail' course_id=course.id %}">
+                <div class="card-content">
+                    <div class="course-image-container">
+                        <img class="course-image" src="{% static 'main/img/course-1.png' %}" alt="{{ course.title }}" />
+                    </div>
+                    <div class="course-details">
+                        <span class="course-category">{{ course.category.name }}</span>
+                        <h3 class="course-title">{{ course.title }}</h3>
+                        <div class="course-meta">
+                            <img class="meta-icon" src="{% static 'main/img/calendar-icon.svg' %}" alt="Даты курса" />
+                            <span class="meta-text">{{ course.start_date|date:"d.m.Y" }} - {{ course.end_date|date:"d.m.Y" }}</span>
+                        </div>
+                        <p class="course-description">
+                            {{ course.description }}
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </article>
+        {% empty %}
+        <p>Курсы не найдены.</p>
+        {% endfor %}
+    </div>
+

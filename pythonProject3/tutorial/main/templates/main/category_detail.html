@@ -1,0 +1,60 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block title %}{{ category.category_name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/category_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="category-detail-container">
+  <div class="category-header">
+    <h1>{{ category.category_name }}</h1>
+    <div class="category-actions">
+      <a href="{% url 'categories' %}" class="btn back-btn">
+        <i class="fas fa-arrow-left"></i> Назад
+      </a>
+      <a href="{% url 'edit_category' category_id=category.id %}" class="btn edit-btn">
+        <i class="fas fa-edit"></i> Редактировать
+      </a>
+      <a href="{% url 'delete_category' category_id=category.id %}" class="btn delete-btn" onclick="return confirm('Вы уверены, что хотите удалить эту категорию?')">
+        <i class="fas fa-trash-alt"></i> Удалить
+      </a>
+    </div>
+  </div>
+
+  <div class="category-description">
+    <h2>Описание категории</h2>
+    {% if category.description %}
+      <p>{{ category.description|linebreaks }}</p>
+    {% else %}
+      <p>Описание для этой категории отсутствует.</p>
+    {% endif %}
+  </div>
+
+  <div class="courses-section">
+    <h2>Курсы в этой категории ({{ courses.count }}):</h2>
+    {% if courses %}
+      <div class="course-list">
+        {% for course in courses %}
+          <a href="{% url 'course_detail' course_id=course.id %}" class="course-card">
+            <div class="course-image-container">
+              {% if course.image %}
+                <img class="course-image" src="{{ course.image.url }}" alt="{{ course.course_name }}" />
+              {% else %}
+                <img class="course-image" src="{% static 'main/img/course-1.png' %}" alt="{{ course.course_name }}" />
+              {% endif %}
+            </div>
+            <h3 class="course-title">{{ course.course_name }}</h3>
+            <div class="course-meta">
+              {{ course.start_date|date:"d.m.Y" }} - {{ course.end_date|date:"d.m.Y" }}
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="no-courses">В этой категории пока нет курсов.</p>
+    {% endif %}
+  </div>
+</main>
+{% endblock %}

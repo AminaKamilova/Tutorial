@@ -1,0 +1,245 @@
+/* course_detail.css */
+:root {
+  --primary-color: #0C062B;
+  --primary-light: #381AC5;
+  --secondary-color: #048ba8;
+  --gray-light: #f5f5f5;
+  --gray-medium: #e0e0e0;
+  --gray-dark: #666;
+  --font-current: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 16px;
+  --box-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --box-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --transition: all 0.3s ease;
+}
+
+.course-detail-container {
+  max-width: 1000px;
+  margin: 100px auto 0;
+  padding: 2rem;
+  font-family: var(--font-current);
+}
+
+.course-header {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.course-header h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.course-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.course-category {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 0.5rem 1.25rem;
+  border-radius: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.course-dates {
+  color: var(--gray-dark);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.course-image-container {
+  width: 100%;
+  height: 400px;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  margin-bottom: 2rem;
+  box-shadow: var(--box-shadow-sm);
+}
+
+.course-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.course-image:hover {
+  transform: scale(1.02);
+}
+
+.course-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius-sm);
+  font-family: var(--font-current);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: var(--box-shadow-sm);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow-md);
+}
+
+.edit-btn {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.delete-btn {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.course-description {
+  background-color: white;
+  padding: 2rem;
+  border-radius: var(--border-radius-lg);
+  margin-bottom: 2.5rem;
+  box-shadow: var(--box-shadow-sm);
+}
+
+.course-description h2 {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.course-description p {
+  color: #555;
+  line-height: 1.6;
+  font-size: 1.05rem;
+}
+
+.lessons-section {
+  background-color: white;
+  padding: 2rem;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--box-shadow-sm);
+}
+
+.lessons-section h2 {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--gray-medium);
+}
+
+.lessons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.lesson-item {
+  background-color: var(--gray-light);
+  border-radius: var(--border-radius-md);
+  padding: 1.5rem;
+  transition: var(--transition);
+}
+
+.lesson-item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--box-shadow-sm);
+}
+
+.lesson-item h3 {
+  color: var(--primary-color);
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lesson-item p {
+  color: var(--gray-dark);
+  line-height: 1.5;
+}
+
+.add-lesson-btn {
+  margin-top: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--secondary-color);
+  font-weight: 500;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.add-lesson-btn:hover {
+  color: var(--primary-light);
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .course-detail-container {
+    padding: 1.5rem;
+    margin-top: 80px;
+  }
+
+  .course-image-container {
+    height: 300px;
+  }
+
+  .course-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .course-detail-container {
+    padding: 1rem;
+  }
+
+  .course-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .course-image-container {
+    height: 200px;
+  }
+
+  .course-meta {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+  }
+}

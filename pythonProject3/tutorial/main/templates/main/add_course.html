@@ -1,0 +1,57 @@
+{% extends "main/layout.html" %}
+{% load static %}
+
+{% block title %}
+  {% if course %}Редактирование курса {{ course.course_name }}{% else %}Создание нового курса{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/course.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="course-form-container">
+  <form method="post" enctype="multipart/form-data" class="auth-form">
+    {% csrf_token %}
+
+    <div class="form-group">
+      {{ form.course_name.label_tag }}
+      {{ form.course_name }}
+    </div>
+
+    <div class="form-group">
+      {{ form.start_date.label_tag }}
+      {{ form.start_date }}
+    </div>
+
+    <div class="form-group">
+      {{ form.end_date.label_tag }}
+      {{ form.end_date }}
+    </div>
+
+    <div class="form-group">
+      {{ form.category_id.label_tag }}
+      {{ form.category_id }}
+    </div>
+
+    <div class="form-group">
+      {{ form.image.label_tag }}
+      {{ form.image }}
+      {% if course and course.image %}
+        <img src="{{ course.image.url }}" alt="Текущее изображение курса" style="max-width: 200px; margin-top: 10px;">
+      {% endif %}
+    </div>
+
+    <footer class="form-footer">
+      {% if course_id != 0 %}
+      <a href="{% url 'delete_course' course_id=course_id %}" id="delete-course-btn" class="btn danger" onclick="return confirm('Вы уверены, что хотите удалить этот курс?')">Удалить курс</a>
+      {% endif %}
+      <button type="submit" class="btn primary">Сохранить</button>
+    </footer>
+  </form>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'main/js/course_form.js' %}"></script>
+{% endblock %}
