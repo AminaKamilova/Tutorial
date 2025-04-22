@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="ru">
-<head>
+<headёё>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Образовательная платформа{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'main/css/globals.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    {% block extra_css %}{% endblock %}
-    <style>
-    :root {
-        /* Light theme colors */
+    {% block extra_css %}{% endblock %}<style>:root {/* Light theme colors */
         --bg-color: #ffffff;
         --card-bg: #f8f9fa;
         --text-color: #212529;
@@ -25,7 +22,6 @@
         --border-color: #e3e6f0;
         --shadow-color: rgba(0, 0, 0, 0.1);
         --white: #ffffff;
-
         /* Dark theme colors */
         --dark-bg: #0c062b;
         --dark-header-bg: #0c062b;
@@ -46,7 +42,6 @@
         --border-radius-md: 12px;
         --border-radius-lg: 12px;
     }
-
     [data-theme="dark"] {
         --bg-color: var(--dark-bg);
         --card-bg: var(--dark-card-bg);
@@ -55,9 +50,6 @@
         --border-color: var(--dark-border);
         --shadow-color: rgba(0, 0, 0, 0.3);
     }
-
-
-
     body {
         overflow-x: hidden;
         background-color: var(--bg-color);
@@ -65,19 +57,16 @@
         font-family: var(--font-current);
         transition: background-color 0.3s ease, color 0.3s ease;
     }
-
     /* Header styles */
     [data-theme="dark"] .header-container {
         background-color: var(--dark-header-bg);
         border-bottom: 1px solid var(--dark-border);
     }
-
     /* Sidebar styles */
     [data-theme="dark"] .sidebar {
         background-color: var(--dark-sidebar-bg);
         border-right: 1px solid var(--dark-border);
     }
-
     /* Navigation items */
     [data-theme="dark"] .nav-item {
         color: var(--dark-text);
@@ -111,7 +100,7 @@
         border: 1px solid var(--primary-color);
     }
 </style>
-</head>
+</headёё>
 <body>
     <div class="app-container">
         <header class="header-container">
@@ -147,7 +136,6 @@
                 <div class="settings-header">
                     <div class="settings-title">Настройки</div>
                 </div>
-
                 <div class="settings-section">
                     <div class="settings-section-title">Основные</div>
                     <div class="settings-item theme-toggle" id="themeToggle">
@@ -160,16 +148,13 @@
                                 <input type="checkbox" id="themeCheckbox">
                                 <span class="theme-slider"></span>
                             </label>
-                        </div>
-                    </div>
+                        </div></div>
                     <div class="settings-item font-selector">
                         <div class="settings-item-icon">
-                            <img src="{% static 'main/img/font.svg' %}" alt="Шрифт">
-                        </div>
+                            <img src="{% static 'main/img/font.svg' %}" alt="Шрифт"></div>
                         <div class="settings-item-name">Шрифт</div>
                         <div class="settings-item-value" id="currentFont">Стандартный</div>
                         <div class="font-dropdown-icon">▼</div>
-
                         <div class="font-dropdown">
                             <div class="font-option" data-font="default">
                                 <span style="font-family: var(--font-default)">Стандартный</span>
@@ -180,9 +165,7 @@
                             <div class="font-option" data-font="monospace">
                                 <span style="font-family: var(--font-monospace)">Моноширинный</span>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </div></div></div>
 
                 <div class="settings-section">
                     <div class="settings-section-title">Прочее</div>
@@ -282,7 +265,6 @@
                         currentFontElement.textContent = 'Стандартный';
                 }
             }
-
             // Инициализация выбора шрифта
             const fontOptions = document.querySelectorAll('.font-option');
 
@@ -293,7 +275,6 @@
                     localStorage.setItem('selectedFont', fontType);
                 });
             });
-
             // Восстановление сохраненного шрифта
             const savedFont = localStorage.getItem('selectedFont');
             if (savedFont) {
@@ -303,7 +284,6 @@
             // Управление темой
             const themeToggle = document.getElementById('themeToggle');
             const themeCheckbox = document.getElementById('themeCheckbox');
-
             function applyTheme(isDark) {
                 const html = document.documentElement;
                 if (isDark) {
@@ -311,34 +291,24 @@
                     themeCheckbox.checked = true;
                 } else {
                     html.removeAttribute('data-theme');
-                    themeCheckbox.checked = false;
-                }
-                localStorage.setItem('darkTheme', isDark ? 'enabled' : 'disabled');
-            }
-
+                    themeCheckbox.checked = false;}
+                localStorage.setItem('darkTheme', isDark ? 'enabled' : 'disabled');}
             // Проверка сохраненной темы
             const savedTheme = localStorage.getItem('darkTheme');
             if (savedTheme === 'enabled') {
                 applyTheme(true);
             } else {
-                applyTheme(false);
-            }
-
+                applyTheme(false); }
             if (themeToggle) {
                 themeToggle.addEventListener('click', function(e) {
                     if (e.target.tagName !== 'INPUT') {
                         const isDark = !document.documentElement.hasAttribute('data-theme');
                         applyTheme(isDark);
-                    }
-                });
-            }
-
+                    } });}
             if (themeCheckbox) {
                 themeCheckbox.addEventListener('change', function() {
                     applyTheme(this.checked);
-                });
-            }
-
+                });}
             document.addEventListener('keydown', function(event) {
                 if (event.key === 'Escape' && settingsPanel) {
                     settingsPanel.classList.remove('active');

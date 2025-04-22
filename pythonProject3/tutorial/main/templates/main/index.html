@@ -10,22 +10,18 @@
     <section class="courses-section">
         <div class="section-header">
             <h2 class="section-title">Рекомендуем</h2>
-            <img class="arrow-icon" src="{% static 'main/img/move.svg' %}" alt="Стрелка">
-        </div>
-        <div class="courses-scroll-container">
-        <div class="courses-grid">
+            <img class="arrow-icon" src="{% static 'main/img/move.svg' %}" alt="Стрелка"></div>
+        <div class="courses-scroll-container"><div class="courses-grid">
             {% for course in courses %}
             <a href="{% url 'course_detail' course_id=course.id %}" class="course-card">
                 <div class="card-content">
                     {% if course.image %}
                     <div class="course-image-container">
                         <img src="{{ course.image.url }}" alt="{{ course.course_name }}" class="course-image">
-                    </div>
-                    {% else %}
+                    </div>{% else %}
                     <div class="course-image-container no-image">
                         <span>Нет изображения</span>
-                    </div>
-                    {% endif %}
+                    </div>{% endif %}
                     <div class="course-details">
                         <span class="course-category">{{ course.category_id.category_name }}</span>
                         <h3 class="course-title">{{ course.course_name }}</h3>
