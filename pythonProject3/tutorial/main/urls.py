@@ -35,6 +35,13 @@ urlpatterns = [
                   path('reports/period/<str:start_date>/<str:end_date>/', login_required(views.period_report),
                        name='period_report'),
 
+                  path('reports/category/<int:category_id>/export/<str:format>/',
+                       login_required(views.export_category_report),
+                       name='export_category_report'),
+                  path('reports/period/<str:start_date>/<str:end_date>/export/<str:format>/',
+                       login_required(views.export_period_report),
+                       name='export_period_report'),
+
                   # Дополнительные пути
                   path('registration_email/', views.registration_email, name='registration_email'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

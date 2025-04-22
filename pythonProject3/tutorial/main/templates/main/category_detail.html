@@ -15,8 +15,8 @@
         <i class="fas fa-arrow-left"></i> Назад
       </a>
       <a href="{% url 'edit_category' category_id=category.id %}" class="btn edit-btn">
-        <i class="fas fa-edit"></i> Редактировать
-      </a>
+    <i class="fas fa-edit"></i> Редактировать
+</a>
       <a href="{% url 'delete_category' category_id=category.id %}" class="btn delete-btn" onclick="return confirm('Вы уверены, что хотите удалить эту категорию?')">
         <i class="fas fa-trash-alt"></i> Удалить
       </a>
@@ -33,7 +33,7 @@
   </div>
 
   <div class="courses-section">
-    <h2>Курсы в этой категории ({{ courses.count }}):</h2>
+    <h2>Курсы в этой категории ({{ courses.count }})</h2>
     {% if courses %}
       <div class="course-list">
         {% for course in courses %}
@@ -42,18 +42,24 @@
               {% if course.image %}
                 <img class="course-image" src="{{ course.image.url }}" alt="{{ course.course_name }}" />
               {% else %}
-                <img class="course-image" src="{% static 'main/img/course-1.png' %}" alt="{{ course.course_name }}" />
+                <div class="no-image-placeholder">
+                  <i class="fas fa-book-open"></i>
+                </div>
               {% endif %}
             </div>
-            <h3 class="course-title">{{ course.course_name }}</h3>
-            <div class="course-meta">
-              {{ course.start_date|date:"d.m.Y" }} - {{ course.end_date|date:"d.m.Y" }}
+            <div class="course-content">
+              <h3 class="course-title">{{ course.course_name }}</h3>
+              <div class="course-meta">
+                {{ course.start_date|date:"d.m.Y" }} - {{ course.end_date|date:"d.m.Y" }}
+              </div>
             </div>
           </a>
         {% endfor %}
       </div>
     {% else %}
-      <p class="no-courses">В этой категории пока нет курсов.</p>
+      <div class="no-courses">
+        <p>В этой категории пока нет курсов.</p>
+      </div>
     {% endif %}
   </div>
 </main>

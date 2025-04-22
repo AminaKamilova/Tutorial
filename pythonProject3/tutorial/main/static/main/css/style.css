@@ -19,7 +19,22 @@
   --button-text-size: 16.58px;
   --header-padding: 24.79px;
   --section-padding: 13.4px;
+/* Для WebKit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
 
+/* Для Firefox */
+html {
+  scrollbar-width: none;
+}
+
+/* Для IE/Edge */
+body {
+  -ms-overflow-style: none;
+}
   /* Новые переменные для темной темы */
   --bg-color: #ffffff;
   --text-color: #0C062B;
@@ -43,7 +58,7 @@
   --gray-lighter: #252525;
   --bg-color: #121212;
   --text-color: #ffffff;
-  --sidebar-bg: #1e1e1e;
+  --sidebar-bg: #121212;
   --header-bg: #1e1e1e;
   --settings-bg: #1e1e1e;
   --card-bg: #1e1e1e;
@@ -290,6 +305,37 @@ body {
   transition: all 0.2s ease;
   color: var(--text-color);
 }
+/* Дополнительные стили для полей формы Django */
+select {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    border-radius: var(--border-radius-sm);
+}
+input[type="date"] {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    border-radius: var(--border-radius-sm);
+}
+.card {
+  transition: all 0.3s ease;
+  transform: translateY(0);
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px var(--shadow-color);
+}
+[data-theme="dark"] select,
+[data-theme="dark"] input[type="date"] {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
 
 .logout-form {
     background-color: rgba(244, 67, 54, 0.1);
@@ -455,7 +501,6 @@ body {
   margin-left: 10px;
 }
 
-/* Стили для переключателя темы */
 .theme-switch {
   position: relative;
   display: inline-block;
@@ -500,8 +545,6 @@ input:checked + .theme-slider {
 input:checked + .theme-slider:before {
   transform: translateX(26px);
 }
-
-/* Стили для выбора шрифта */
 .font-selector {
   position: relative;
 }
@@ -538,6 +581,22 @@ input:checked + .theme-slider:before {
 
 .font-option:hover {
   background-color: var(--hover-bg);
+}
+.action-btn {
+  border-radius: 20px;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.edit-btn {
+  background-color: var(--primary-light);
+}
+
+.delete-btn {
+  background-color: var(--danger-color);
 }
 
 /* Адаптация для мобильных устройств */

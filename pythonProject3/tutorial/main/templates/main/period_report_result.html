@@ -2,26 +2,35 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}{% trans "Отчет по категориям" %}{% endblock %}
+{% block title %}{% trans "Отчет за выбранный период" %}{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'main/css/reports.css' %}">
+
 {% endblock %}
 
 {% block content %}
 <div class="form-container">
     <div class="form-header">
         <h1>{% trans "Отчет за выбранный период" %}</h1>
+        <p>Период: с {{ start_date }} по {{ end_date }}</p>
     </div>
     {% for course in report_data %}
-    <div method="post" class="report-form1">
+    <div class="report-form1">
         <p>Имя пользователя: {{ course.user_id.user_name }}</p>
         <p>Название курса: {{ course.course_name }}</p>
         <p>Дата начала: {{ course.start_date|date:"d.m.Y" }}</p>
+        <p>Дата окончания: {{ course.end_date|date:"d.m.Y" }}</p>
+        <p>Продолжительность: {{ course.duration_days }} дней</p>
         <p>Категория: {{ course.category_id }}</p>
+        <p>Количество уроков: {{ course.lessons_count }}</p>
         <br>
     </div>
     {% endfor %}
-    <a href="{% url 'reports' %}">Назад</a>
+    <a href="{% url 'reports' %}" class="btn">Назад</a>
+    <div class="export-buttons">
+        <a href="{% url 'export_period_report' start_date end_date 'xlsx' %}" class="btn">Excel</a>
+        <a href="{% url 'export_period_report' start_date end_date 'pdf' %}" class="btn">PDF</a>
+    </div>
 </div>
 {% endblock %}

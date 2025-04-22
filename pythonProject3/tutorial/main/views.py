@@ -10,11 +10,21 @@ from .forms import LoginForm, UserForm, CategoryForm
 from .models import Courses, Categories, Lessons
 from .forms import CourseForm, LessonForm
 from django.db.models import DurationField
+from django.http import HttpResponse
+from openpyxl import Workbook
+from io import BytesIO
+from reportlab.pdfgen import canvas
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.db.models import Count, F, DurationField
+from django.db.models.functions import ExtractDay
 
 
 def courses(request):
     courses_list = Courses.objects.all()
     return render(request, "main/courses.html", {'courses': courses_list})
+
+
 @login_required
 def add_category(request):
     if request.method == 'POST':
@@ -33,16 +43,15 @@ def edit_category(request, category_id):
     if request.method == 'POST':
         form = CategoryForm(request.POST, instance=category)
         if form.is_valid():
-            form.save()
+            updated_category = form.save()
             messages.success(request, 'Категория успешно обновлена!')
-            return redirect('category_detail', category_id=category_id)
+            return redirect('category_detail', category_id=category.id)
     else:
         form = CategoryForm(instance=category)
     return render(request, 'main/add_categories.html', {
         'form': form,
         'category': category
     })
-
 @login_required
 def delete_category(request, category_id):
     category = get_object_or_404(Categories, pk=category_id)
@@ -59,6 +68,7 @@ def category_detail(request, category_id):
         'courses': courses_in_category
     })
 
+
 def categories(request):
     all_categories = Categories.objects.annotate(
         course_count=Count('courses')
@@ -66,6 +76,7 @@ def categories(request):
     return render(request, 'main/categories.html', {
         'categories': all_categories
     })
+
 
 def index(request):
     courses_list = Courses.objects.all().order_by('-start_date')[:8]
@@ -76,6 +87,8 @@ def index(request):
         'courses': courses_list,
         'popular_categories': popular_categories
     })
+
+
 @login_required
 def reports(request):
     global period_form, category_form
@@ -145,6 +158,8 @@ def add_course(request, course_id):
         else:
             form = CourseForm(instance=course)
     return render(request, "main/add_course.html", {'form': form, 'course_id': course_id})
+
+
 def add_lesson(request, lesson_id):
     if lesson_id == 0:
         if request.method == 'POST':
@@ -171,6 +186,7 @@ def add_lesson(request, lesson_id):
             form = LessonForm(instance=lesson)
     return render(request, "main/add_lesson.html", {'form': form, 'lesson_id': lesson_id})
 
+
 def login(request):
     if request.method == 'POST':
         form = LoginForm(request, data=request.POST)
@@ -192,21 +208,22 @@ def logout(request):
 
 @login_required
 def period_report(request, start_date, end_date):
-    start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
-    end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+    start_date_obj = datetime.strptime(start_date, '%Y-%m-%d').date()
+    end_date_obj = datetime.strptime(end_date, '%Y-%m-%d').date()
 
     report_data = Courses.objects.filter(
-        start_date__range=(start_date, end_date)
+        start_date__range=(start_date_obj, end_date_obj)
     ).annotate(
-        duration=ExpressionWrapper(
-            F('end_date') - F('start_date'),
-            output_field=DurationField()
-        ),
         lessons_count=Count('lessons')
     ).select_related('user_id').order_by('start_date')
 
+    for course in report_data:
+        course.duration_days = (course.end_date - course.start_date).days
+
     return render(request, 'main/period_report_result.html', {
         'report_data': report_data,
+        'start_date': start_date,
+        'end_date': end_date,
         'title': _('Отчет за выбранный период')
     })
 
@@ -218,7 +235,7 @@ def category_report(request, category_id):
     ).annotate(
         duration=ExpressionWrapper(
             F('end_date') - F('start_date'),
-            output_field = DurationField()
+            output_field=DurationField()
         ),
         lessons_count=Count('lessons')
     ).select_related('user_id').order_by('start_date')
@@ -228,11 +245,6 @@ def category_report(request, category_id):
         'category': category,
         'title': _('Отчет по категории')
     })
-
-    # return render(request, 'main/category_report_result .html', {
-    #     'form': form,
-    #     'title': _('Отчет по категории')
-    # })
 
 
 from django.shortcuts import render, redirect, get_object_or_404
@@ -274,6 +286,8 @@ def delete_course(request, course_id):
     course.delete()
     print("Курс удалён!")  # Проверка
     return redirect('courses')
+
+
 @login_required
 def delete_lesson(request, lesson_id):
     lesson = get_object_or_404(Lessons, pk=lesson_id)
@@ -282,25 +296,13 @@ def delete_lesson(request, lesson_id):
     messages.success(request, 'Урок успешно удален!')
     return redirect('course_detail', course_id=course_id)
 
-def add_category(request):
-    if request.method == 'POST':
-        form = CategoryForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('categories')
-    else:
-        form = CategoryForm()
-    return render(request, "main/add_categories.html", {'form': form})
-
 
 from django.db.models import Count
 
 
 def home(request):
-    # Получаем все курсы
     courses = Courses.objects.all().order_by('-start_date')
 
-    # Получаем популярные категории (5 категорий с наибольшим количеством курсов)
     popular_categories = Categories.objects.annotate(
         course_count=Count('courses')
     ).order_by('-course_count')[:5]
@@ -310,3 +312,91 @@ def home(request):
         'popular_categories': popular_categories
     })
 
+
+def export_category_report(request, category_id, format):
+    category = Categories.objects.get(id=category_id)
+    report_data = Courses.objects.filter(
+        category_id=category
+    ).annotate(
+        lessons_count=Count('lessons')
+    ).select_related('user_id', 'category_id').order_by('start_date')
+
+    for course in report_data:
+        course.duration_days = (course.end_date - course.start_date).days
+
+    if format == 'xlsx':
+        return export_to_excel(report_data, f'report_category_{category_id}')
+    elif format == 'pdf':
+        return export_to_pdf(request, 'main/category_report_result.html',
+                             {'report_data': report_data, 'category': category},
+                             f'report_category_{category_id}.pdf')
+
+
+def export_period_report(request, start_date, end_date, format):
+    report_data = Courses.objects.filter(
+        start_date__gte=start_date,
+        end_date__lte=end_date
+    ).annotate(
+        lessons_count=Count('lessons')
+    ).select_related('user_id', 'category_id').order_by('start_date')
+
+    # Add duration calculation manually
+    for course in report_data:
+        course.duration_days = (course.end_date - course.start_date).days
+
+    if format == 'xlsx':
+        return export_to_excel(report_data, f'report_period_{start_date}_{end_date}')
+    elif format == 'pdf':
+        return export_to_pdf(request, 'main/period_report_result.html',
+                             {'report_data': report_data,
+                              'start_date': start_date,
+                              'end_date': end_date},
+                             f'report_period_{start_date}_{end_date}.pdf')
+
+
+def export_to_excel(queryset, filename):
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = f'attachment; filename="{filename}.xlsx"'
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Report"
+
+    # Заголовки
+    headers = ['Курс', 'Категория', 'Дата начала', 'Дата окончания', 'Длительность (дни)', 'Уроков']
+    ws.append(headers)
+
+    # Данные
+    for item in queryset:
+        ws.append([
+            item.course_name,
+            item.category_id.category_name,
+            item.start_date.strftime('%d.%m.%Y'),
+            item.end_date.strftime('%d.%m.%Y'),
+            (item.end_date - item.start_date).days,  # Calculate duration directly
+            item.lessons_count
+        ])
+
+    wb.save(response)
+    return response
+
+
+def export_to_pdf(request, template_name, context, filename):
+    template = get_template(template_name)
+    html = template.render(context)
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    # Указываем кодировку UTF-8 и дополнительные параметры для корректного отображения кириллицы
+    pisa_status = pisa.CreatePDF(
+        html,
+        dest=response,
+        encoding='UTF-8',
+        link_callback=None,
+        show_error_as_pdf=True
+    )
+
+    if pisa_status.err:
+        return HttpResponse('Ошибка при создании PDF: ' + str(pisa_status.err))
+    return response

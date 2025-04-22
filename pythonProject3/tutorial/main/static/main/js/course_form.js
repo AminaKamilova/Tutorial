@@ -42,8 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-  // Добавление нового урока
   const addLessonBtn = document.getElementById('add-lesson-btn');
   if (addLessonBtn) {
     addLessonBtn.addEventListener('click', function() {
@@ -65,7 +63,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Удаление урока
   function setupLessonEvents(lessonElement) {
     const removeBtn = lessonElement.querySelector('.remove-lesson-btn');
     if (removeBtn) {
@@ -76,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Обновление номеров уроков
   function updateLessonNumbers() {
     const lessons = document.querySelectorAll('.lesson-item');
     lessons.forEach((lesson, index) => {

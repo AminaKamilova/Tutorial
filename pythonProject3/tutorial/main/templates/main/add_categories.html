@@ -1,7 +1,9 @@
 {% extends "main/layout.html" %}
 {% load static %}
 
-{% block title %}Добавление новой категории{% endblock %}
+{% block title %}
+  {% if category %}Редактирование категории {{ category.category_name }}{% else %}Добавление новой категории{% endif %}
+{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'main/css/course.css' %}">
@@ -113,6 +115,15 @@
     background-color: var(--primary-light);
   }
 
+  .btn.danger {
+    background-color: var(--danger-color);
+    color: var(--white);
+  }
+
+  .btn.danger:hover {
+    background-color: var(--danger-light);
+  }
+
   @media (max-width: 768px) {
     .category-form-container {
       margin: 20px;
@@ -124,25 +135,23 @@
 
 {% block content %}
 <main class="category-form-container">
-    <form method="post" class="category-form" action="{% url 'add_category' %}">
+    <form method="post" class="category-form">
         {% csrf_token %}
         <header class="form-header">
-            <h1>Добавление новой категории</h1>
+            <h1>{% if category %}Редактирование категории{% else %}Добавление новой категории{% endif %}</h1>
             <button type="button" class="close-btn" aria-label="Закрыть форму">×</button>
         </header>
 
-        <!-- Исправленное поле category_name -->
         <div class="form-group">
-            {{ form.category_name.label_tag }}  <!-- Автоматически генерирует правильный label -->
+            {{ form.category_name.label_tag }}
             {{ form.category_name }}
             {% if form.category_name.errors %}
                 <div class="error">{{ form.category_name.errors }}</div>
             {% endif %}
         </div>
 
-        <!-- Исправленное поле description -->
         <div class="form-group">
-            {{ form.description.label_tag }}  <!-- Автоматически генерирует правильный label -->
+            {{ form.description.label_tag }}
             {{ form.description }}
             {% if form.description.errors %}
                 <div class="error">{{ form.description.errors }}</div>
@@ -150,6 +159,9 @@
         </div>
 
         <footer class="form-footer">
+            {% if category %}
+                <a href="{% url 'delete_category' category_id=category.id %}" class="btn danger" onclick="return confirm('Вы уверены, что хотите удалить эту категорию?')">Удалить</a>
+            {% endif %}
             <button type="submit" class="btn primary">Сохранить</button>
         </footer>
     </form>
@@ -158,8 +170,13 @@
 
 {% block extra_js %}
 <script>
-  document.querySelector('.close-btn').addEventListener('click', function() {
-    window.history.back();
+  document.addEventListener('DOMContentLoaded', function() {
+    const closeBtn = document.querySelector('.close-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function() {
+        window.location.href = '{% if category %}/category/{{ category.id }}{% else %}/categories/{% endif %}';
+      });
+    }
   });
 </script>
 {% endblock %}

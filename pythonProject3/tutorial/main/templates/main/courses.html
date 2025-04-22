@@ -8,16 +8,14 @@
 {% block content %}
 <section class="courses-section">
     <div class="section-header">
-        <h2 class="section-title">Все курсы</h2>
-        <img class="arrow-icon" src="{% static 'main/img/move.svg' %}" alt="Стрелка">
-    </div>
-
-    <div class="header-actions">
+        <h1 class="section-title">Все курсы</h1>
+        <div class="header-actions">
         {% if user.is_authenticated %}
             <button class="add-course-btn" onclick="window.location.href='{% url 'add_course' course_id=0 %}'">
                 <i>+</i> Добавить курс
             </button>
         {% endif %}
+    </div>
     </div>
 
     <div class="courses-grid">

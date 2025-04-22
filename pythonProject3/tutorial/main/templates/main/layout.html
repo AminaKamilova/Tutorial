@@ -2,13 +2,115 @@
 {% load static %}
 <html lang="ru">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Образовательная платформа{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'main/css/globals.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     {% block extra_css %}{% endblock %}
+    <style>
+    :root {
+        /* Light theme colors */
+        --bg-color: #ffffff;
+        --card-bg: #f8f9fa;
+        --text-color: #212529;
+        --secondary-text: #6c757d;
+        --primary-color: #4e73df;
+        --primary-light: #6e8ef7;
+        --primary-lighter: #a6bff9;
+        --danger-color: #e74a3b;
+        --danger-light: #f1948a;
+        --success-color: #1cc88a;
+        --border-color: #e3e6f0;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+        --white: #ffffff;
+
+        /* Dark theme colors */
+        --dark-bg: #0c062b;
+        --dark-header-bg: #0c062b;
+        --dark-sidebar-bg: #0c062b;
+        --dark-card-bg: #150947;
+        --dark-text: #ffffff;
+        --dark-secondary-text: #adb5bd;
+        --dark-border: #1a1a2e;
+
+        /* Fonts */
+        --font-default: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        --font-serif: Georgia, 'Times New Roman', Times, serif;
+        --font-monospace: 'Courier New', Courier, monospace;
+        --font-current: var(--font-default);
+
+        /* Border radius */
+        --border-radius-sm: 12px;
+        --border-radius-md: 12px;
+        --border-radius-lg: 12px;
+    }
+
+    [data-theme="dark"] {
+        --bg-color: var(--dark-bg);
+        --card-bg: var(--dark-card-bg);
+        --text-color: var(--dark-text);
+        --secondary-text: var(--dark-secondary-text);
+        --border-color: var(--dark-border);
+        --shadow-color: rgba(0, 0, 0, 0.3);
+    }
+
+
+
+    body {
+        overflow-x: hidden;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: var(--font-current);
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Header styles */
+    [data-theme="dark"] .header-container {
+        background-color: var(--dark-header-bg);
+        border-bottom: 1px solid var(--dark-border);
+    }
+
+    /* Sidebar styles */
+    [data-theme="dark"] .sidebar {
+        background-color: var(--dark-sidebar-bg);
+        border-right: 1px solid var(--dark-border);
+    }
+
+    /* Navigation items */
+    [data-theme="dark"] .nav-item {
+        color: var(--dark-text);
+    }
+
+    [data-theme="dark"] .nav-item:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Settings panel */
+    [data-theme="dark"] .settings-panel {
+        background-color: var(--dark-card-bg);
+        color: var(--dark-text);
+    }
+        [data-theme="dark"] .auth-button {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    [data-theme="dark"] .auth-button--secondary {
+        background-color: transparent;
+        border: 1px solid var(--primary-color);
+    }
+        [data-theme="dark"] .auth-button {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    [data-theme="dark"] .auth-button--secondary {
+        background-color: transparent;
+        border: 1px solid var(--primary-color);
+    }
+</style>
 </head>
 <body>
     <div class="app-container">
@@ -20,13 +122,11 @@
                 {% endif %}
             </div>
 
-            {% if user.is_authenticated %}
             <div class="user-profile" id="profileButton">
                 <div class="profile-icon">
                     <img src="{% static 'main/img/account.svg' %}" alt="Профиль пользователя">
                 </div>
             </div>
-            {% endif %}
         </header>
 
         <!-- Панель настроек -->
@@ -96,9 +196,6 @@
                     <form method="post" action="{% url 'logout' %}" class="logout-form">
                         {% csrf_token %}
                         <button type="submit" class="settings-item logout-button">
-                            <div class="settings-item-icon">
-                                <img src="{% static 'main/img/logout.svg' %}" alt="Выход">
-                            </div>
                             <div class="settings-item-name">Выйти</div>
                         </button>
                     </form>
@@ -126,12 +223,10 @@
                         <img src="{% static 'main/img/categories.svg' %}" alt="">
                         <span>Категории</span>
                     </li></a>
-<!--                    {% if user.is_authenticated %}-->
                     <a href="{% url 'reports' %}"><li class="nav-item">
                         <img src="{% static 'main/img/reports.svg' %}" alt="">
                         <span>Отчеты</span>
                     </li></a>
-<!--                    {% endif %}-->
                 </ul>
             </nav>
             <main class="content-area">
@@ -145,7 +240,7 @@
             // Управление панелью настроек
             const profileButton = document.getElementById('profileButton');
             const settingsPanel = document.getElementById('settingsPanel');
-            const panelProfileButton = settingsPanel.querySelector('.user-profile');
+            const panelProfileButton = settingsPanel?.querySelector('.user-profile');
 
             if (profileButton && settingsPanel && panelProfileButton) {
                 // Обработчик для кнопки профиля в хедере
@@ -225,23 +320,27 @@
             const savedTheme = localStorage.getItem('darkTheme');
             if (savedTheme === 'enabled') {
                 applyTheme(true);
+            } else {
+                applyTheme(false);
             }
 
-            // Обработчик переключения темы
-            themeToggle.addEventListener('click', function(e) {
-                if (e.target.tagName !== 'INPUT') {
-                    const isDark = !document.documentElement.hasAttribute('data-theme');
-                    applyTheme(isDark);
-                }
-            });
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function(e) {
+                    if (e.target.tagName !== 'INPUT') {
+                        const isDark = !document.documentElement.hasAttribute('data-theme');
+                        applyTheme(isDark);
+                    }
+                });
+            }
 
-            themeCheckbox.addEventListener('change', function() {
-                applyTheme(this.checked);
-            });
+            if (themeCheckbox) {
+                themeCheckbox.addEventListener('change', function() {
+                    applyTheme(this.checked);
+                });
+            }
 
-            // Закрытие при нажатии Escape
             document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape') {
+                if (event.key === 'Escape' && settingsPanel) {
                     settingsPanel.classList.remove('active');
                 }
             });

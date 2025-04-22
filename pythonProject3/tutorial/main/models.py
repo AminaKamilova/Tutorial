@@ -51,18 +51,6 @@ class Categories(models.Model):
 
     REQUIRED_FIELDS = ['category_name']
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            base_slug = slugify(self.category_name)
-            self.slug = base_slug
-            counter = 1
-            # Проверяем, существует ли уже такой slug
-            while Categories.objects.filter(slug=self.slug).exists():
-                # Если существует, добавляем число в конец
-                self.slug = f"{base_slug}-{counter}"
-                counter += 1
-        super().save(*args, **kwargs)
-
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'

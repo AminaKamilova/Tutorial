@@ -6,6 +6,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'main/css/reports.css' %}">
+<meta charset="UTF-8">
 {% endblock %}
 
 {% block content %}
@@ -24,5 +25,10 @@
     </div>
     {% endfor %}
     <a href="{% url 'reports' %}">Назад</a>
+    <div class="export-buttons">
+    <a href="{% url 'export_category_report' category.id 'xlsx' %}" class="btn">Excel</a>
+    <a href="{% url 'export_category_report' category.id 'pdf' %}" class="btn">PDF</a>
+</div>
+
 </div>
 {% endblock %}

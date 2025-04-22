@@ -18,21 +18,23 @@
     <div class="categories-grid">
       {% for category in categories %}
       <div class="category-card">
-        <a href="{% url 'category_detail' category_id=category.id %}" class="category-link">
-          <h3 class="category-title">{{ category.category_name }}</h3>
-          <p class="category-description">{{ category.description|default:"Описание отсутствует"|truncatechars:100 }}</p>
-        </a>
-        <div class="category-meta">
-          <span class="courses-count">{{ category.course_count }} курсов</span>
-          <div class="category-actions">
-            <a href="{% url 'category_detail' category_id=category.id %}" class="action-btn">Просмотр</a>
-            <a href="{% url 'edit_category' category_id=category.id %}" class="action-btn edit-btn">Редактировать</a>
-            <a href="{% url 'delete_category' category_id=category.id %}" class="action-btn delete-btn" onclick="return confirm('Вы уверены, что хотите удалить эту категорию?')">Удалить</a>
+        <a href="{% url 'category_detail' category_id=category.id %}" class="card-link">
+          <div class="card-content">
+            <div class="category-details">
+              <h3 class="category-title">{{ category.category_name }}</h3>
+              <p class="category-description">{{ category.description|default:"Описание отсутствует"|truncatechars:100 }}</p>
+              <div class="category-meta">
+                <span class="courses-count">{{ category.course_count }} курсов</span>
+              </div>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
       {% empty %}
-      <p>Категории не найдены.</p>
+      <div class="no-categories">
+        <p>Категории не найдены.</p>
+        <a href="{% url 'add_category' %}" class="add-categories-btn">Добавить категорию</a>
+      </div>
       {% endfor %}
     </div>
   </div>
